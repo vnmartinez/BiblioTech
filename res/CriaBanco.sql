@@ -44,17 +44,17 @@ create table emprestimos(
     descricao VARCHAR(100),
     data date,
     datafim date, 
+    statusEmprestimo VARCHAR(20),
 
-    
+    PRIMARY KEY (idEmprestimo)
 )
 
-    
+create table livroEmprestimo(
+    idLivroEmprestimo int auto_increment, 
+    idEmprestimo int,
+    idLivro int, 
 
-
-public class EmprestimoBEAN {
-    private int idEmprestimo;
-    private int idAmigos;
-    private String descricao;
-    private Date data = new Date();
-    private Date datafim = new Date();
-    private String statusEmprestimo;
+    PRIMARY KEY (idLivroEmprestimo),
+    FOREIGN KEY (idEmprestimo) REFERENCES emprestimos(idEmprestimo),
+    FOREIGN KEY (idLivro) REFERENCES livros(idLivro)
+)

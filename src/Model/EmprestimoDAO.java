@@ -26,30 +26,30 @@ public class EmprestimoDAO {
     }
 
     public void create(EmprestimoBEAN emprestimo, ArrayList<Integer> idLivros) {
-        String query = "INSERT INTO EMPRESTIMOS (AMIGOS_IDAMIGOS, DESCRICAO, DATA, DATAFIM, STATUSEMPRESTIMO) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO EMPRESTIMOS (idAmigos, DESCRICAO, DATA, DATAFIM, STATUSEMPRESTIMO) VALUES (?,?,?,?,?)";
         MySQLDAO.executeQuery(query, emprestimo.getIDAmigos(), emprestimo.getDescricao(), emprestimo.getData(), emprestimo.getDataFim(), "Ativo");
         
         for (int i = 0; i < idLivros.size(); i++) {
-            String query2 = "INSERT INTO EMPRESTIMOS_HAS_LIVROS (EMPRESTIMOS_IDEMPRESTIMOS, LIVROS_IDLIVROS) VALUES (?,?)";
+            String query2 = "INSERT INTO LIVROEMPRESTIMO (idEmprestimo, idLivro) VALUES (?,?)";
             MySQLDAO.executeQuery(query2, findMaxIDEmprestimo(), idLivros.get(i));
         }
     }
    
     public void update(EmprestimoBEAN emprestimo, ArrayList<Integer> idLivros) {
-        MySQLDAO.executeQuery("DELETE FROM EMPRESTIMOS_HAS_LIVROS WHERE EMPRESTIMOS_IDEMPRESTIMOS = ?", emprestimo.getIDEmprestimo());
+        MySQLDAO.executeQuery("DELETE FROM LIVROEMPRESTIMO WHERE idEmprestimo = ?", emprestimo.getIDEmprestimo());
         
         for (int i = 0; i < idLivros.size(); i++) {
-            String query1 = "INSERT INTO EMPRESTIMOS_HAS_LIVROS (EMPRESTIMOS_IDEMPRESTIMOS, LIVROS_IDLIVROS) VALUES (?,?)";
+            String query1 = "INSERT INTO LIVROEMPRESTIMO (idEmprestimo, idLivro) VALUES (?,?)";
             MySQLDAO.executeQuery(query1, emprestimo.getIDEmprestimo(), idLivros.get(i));
         }
         
-        String query = "UPDATE EMPRESTIMOS SET AMIGOS_IDAMIGOS=?, DESCRICAO=?, DATA=?, DATAFIM=?, STATUSEMPRESTIMO=? WHERE IDEMPRESTIMO =?";
+        String query = "UPDATE EMPRESTIMOS SET idAmigos=?, DESCRICAO=?, DATA=?, DATAFIM=?, STATUSEMPRESTIMO=? WHERE IDEMPRESTIMO =?";
         MySQLDAO.executeQuery(query, emprestimo.getIDAmigos(), emprestimo.getDescricao(), emprestimo.getData(), emprestimo.getDataFim(), emprestimo.getStatusEmprestimo(), emprestimo.getIDEmprestimo());
     }
     
     public void delete(EmprestimoBEAN emprestimo) {
         MySQLDAO.executeQuery("DELETE FROM EMPRESTIMOS WHERE IDEMPRESTIMO =?", emprestimo.getIDEmprestimo());
-        MySQLDAO.executeQuery("DELETE FROM EMPRESTIMOS_HAS_LIVROS WHERE EMPRESTIMOS_IDEMPRESTIMOS =?", emprestimo.getIDEmprestimo());
+        MySQLDAO.executeQuery("DELETE FROM LIVROEMPRESTIMO WHERE idEmprestimo =?", emprestimo.getIDEmprestimo());
     }
     
     public void ativar(EmprestimoBEAN emprestimo) {
@@ -86,7 +86,7 @@ public class EmprestimoDAO {
         rs = MySQLDAO.getResultSet(query);
         try {
             while (rs.next()) {
-                lista.add(new EmprestimoBEAN(rs.getInt("IDEMPRESTIMO"), rs.getInt("AMIGOS_IDAMIGOS"), rs.getString("DESCRICAO"), rs.getDate("DATA"), rs.getDate("DATAFIM"), rs.getString("STATUSEMPRESTIMO")));
+                lista.add(new EmprestimoBEAN(rs.getInt("IDEMPRESTIMO"), rs.getInt("idAmigos"), rs.getString("DESCRICAO"), rs.getDate("DATA"), rs.getDate("DATAFIM"), rs.getString("STATUSEMPRESTIMO")));
             }
             rs.close();
         } catch (SQLException e) {
@@ -101,7 +101,7 @@ public class EmprestimoDAO {
         rs = MySQLDAO.getResultSet(query);
         try {
             while (rs.next()) {
-                lista.add(new EmprestimoBEAN(rs.getInt("IDEMPRESTIMO"), rs.getInt("AMIGOS_IDAMIGOS"), rs.getString("DESCRICAO"), rs.getDate("DATA"), rs.getDate("DATAFIM"), rs.getString("STATUSEMPRESTIMO")));
+                lista.add(new EmprestimoBEAN(rs.getInt("IDEMPRESTIMO"), rs.getInt("idAmigos"), rs.getString("DESCRICAO"), rs.getDate("DATA"), rs.getDate("DATAFIM"), rs.getString("STATUSEMPRESTIMO")));
             }
             rs.close();
         } catch (SQLException e) {
@@ -114,10 +114,10 @@ public class EmprestimoDAO {
         ArrayList<LivroBEAN> listaLivros = new ArrayList<LivroBEAN>();
         ControleLivro livro = new ControleLivro();
         ResultSet rs;
-        rs = MySQLDAO.getResultSet("SELECT * FROM EMPRESTIMOS_HAS_LIVROS WHERE EMPRESTIMOS_IDEMPRESTIMOS = ?", idEmprestimos);
+        rs = MySQLDAO.getResultSet("SELECT * FROM LIVROEMPRESTIMO WHERE idEmprestimo = ?", idEmprestimos);
         try {
             while (rs.next()) {
-                listaLivros.add(livro.consultaLivroById(rs.getInt("LIVROS_IDLIVROS")));
+                listaLivros.add(livro.consultaLivroById(rs.getInt("idLivro")));
             }
             rs.close();
         } catch (SQLException e) {
@@ -171,7 +171,7 @@ public class EmprestimoDAO {
         
         try {
             while (rs.next()) {
-                lista.add(new EmprestimoBEAN(rs.getInt("IDEMPRESTIMO"), rs.getInt("AMIGOS_IDAMIGOS"), rs.getString("DESCRICAO"), rs.getDate("DATA"), rs.getDate("DATAFIM"), rs.getString("STATUSEMPRESTIMO")));
+                lista.add(new EmprestimoBEAN(rs.getInt("IDEMPRESTIMO"), rs.getInt("idAmigos"), rs.getString("DESCRICAO"), rs.getDate("DATA"), rs.getDate("DATAFIM"), rs.getString("STATUSEMPRESTIMO")));
             }
             rs.close();
         } catch (SQLException e) {
