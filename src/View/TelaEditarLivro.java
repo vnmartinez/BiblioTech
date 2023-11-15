@@ -7,6 +7,7 @@ import Model.AutorBEAN;
 import Model.EditoraBEAN;
 import Model.EditoraDAO;
 import Model.LivroBEAN;
+import Model.AutorDAO;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +25,13 @@ public class TelaEditarLivro extends javax.swing.JFrame {
         this.setResizable(false); 
     }
 
-    public TelaEditarLivro(int idLivro, String titulo, String isbn, String statusLivro, String nomeEditora) {
+    public TelaEditarLivro(int idLivro, String titulo, String statusLivro, String nomeEditora, String nomeAutor) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false); 
         
         preencher_ComboBox(statusLivro, nomeEditora);
+        preencher_ComboBoxAutor(statusLivro, nomeAutor);
         
         jTextID.setText(String.valueOf(idLivro));
         jTextTitulo.setText(String.valueOf(titulo));        
@@ -103,7 +105,7 @@ public class TelaEditarLivro extends javax.swing.JFrame {
         jComboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel7.setText("EDITORA: ");
+        jLabel7.setText("AUTOR:");
 
         cbxAutor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
 
@@ -119,26 +121,24 @@ public class TelaEditarLivro extends javax.swing.JFrame {
                         .addGap(164, 164, 164))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextTitulo)
-                                    .addComponent(jTextID)
-                                    .addComponent(jComboBox, 0, 250, Short.MAX_VALUE)
-                                    .addComponent(jComboBoxStatus, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(162, 162, 162)
                                 .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
                                 .addGap(36, 36, 36)
-                                .addComponent(cbxAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextTitulo)
+                                    .addComponent(jTextID)
+                                    .addComponent(jComboBox, 0, 250, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxStatus, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(60, 60, 60))))
         );
         layout.setVerticalGroup(
@@ -170,7 +170,7 @@ public class TelaEditarLivro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         pack();
@@ -196,6 +196,30 @@ public class TelaEditarLivro extends javax.swing.JFrame {
             EditoraBEAN editora = jComboBox.getItemAt(i);
             if (editora.getNomeEditora().equals(nomeEditora)) {
                 jComboBox.setSelectedIndex(i);
+            }
+        }
+    }
+    
+    private void preencher_ComboBoxAutor(String statusLivro, String nomeAutor){  
+        for (int i = 0; i < jComboBoxStatus.getItemCount(); i++) {
+            if (statusLivro.equals(jComboBoxStatus.getItemAt(i))) {
+                jComboBoxStatus.setSelectedIndex(i);
+            }
+        }
+        
+        List<AutorBEAN> listaAutores = new ArrayList<>();
+        AutorDAO daoEdit = new AutorDAO();
+        
+        listaAutores = daoEdit.autoresAtivos();
+        
+        for (AutorBEAN autor : listaAutores) {
+            cbxAutor.addItem(autor);
+        }
+        
+        for (int i = 0; i < cbxAutor.getItemCount(); i++) {
+            AutorBEAN autor = cbxAutor.getItemAt(i);
+            if (autor.getNomeAutor().equals(nomeAutor)) {
+                cbxAutor.setSelectedIndex(i);
             }
         }
     }

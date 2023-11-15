@@ -338,8 +338,7 @@ public class TelaEditora extends javax.swing.JFrame {
         String idString = jTableEditora.getValueAt(index, 0).toString();
         id = Integer.parseInt(idString);
         String nomeEditora = jTableEditora.getValueAt(index, 1).toString();
-        String cepEditora = jTableEditora.getValueAt(index, 2).toString();
-        String statusString = jTableEditora.getValueAt(index, 3).toString();
+        String statusString = jTableEditora.getValueAt(index, 2).toString();
 
         new TelaEditarEditora(id, nomeEditora, statusString).setVisible(true);
 
@@ -358,7 +357,7 @@ public class TelaEditora extends javax.swing.JFrame {
 
     private void jTableEditoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEditoraMouseClicked
         int index = jTableEditora.getSelectedRow();
-        String mouseClick = jTableEditora.getValueAt(index, 3).toString();
+        String mouseClick = jTableEditora.getValueAt(index, 2).toString();
 
         if(mouseClick == "Ativo"){
             inativarBotaoAtivar();

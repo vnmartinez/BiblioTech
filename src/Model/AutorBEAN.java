@@ -40,4 +40,9 @@ public class AutorBEAN {
     public void setStatusAutor(int stautsAutor) {
         this.statusAutor = statusAutor;
     }
+    
+    @Override
+    public String toString(){
+        return getNomeAutor();
+    }
 }

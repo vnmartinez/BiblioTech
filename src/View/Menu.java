@@ -23,7 +23,9 @@ public class Menu extends javax.swing.JFrame {
         jButtonEmprestimo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Biliotech");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setExtendedState(1);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 153));
 

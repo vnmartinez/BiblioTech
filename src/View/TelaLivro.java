@@ -288,11 +288,12 @@ public class TelaLivro extends javax.swing.JFrame {
         String idString = jTableLivros.getValueAt(index, 0).toString();
         id = Integer.parseInt(idString);
         String titulo = jTableLivros.getValueAt(index, 1).toString();
-        String isbn = jTableLivros.getValueAt(index, 2).toString();
-        String nomeEditora = jTableLivros.getValueAt(index, 3).toString();
+        String nomeEditora = jTableLivros.getValueAt(index, 2).toString();
+        String nomeAutor =   jTableLivros.getValueAt(index, 3).toString();
         String statusLivro = jTableLivros.getValueAt(index, 4).toString();
         
-        new TelaEditarLivro(id, titulo, isbn, statusLivro, nomeEditora).setVisible(true);
+        
+        new TelaEditarLivro(id, titulo, statusLivro, nomeEditora, nomeAutor).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
