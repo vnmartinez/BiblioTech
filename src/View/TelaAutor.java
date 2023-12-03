@@ -68,7 +68,7 @@ public class TelaAutor extends javax.swing.JFrame {
         });
         PopUpMenu.add(jMenuItemInativar);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTableAutor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jTableAutor.setModel(new javax.swing.table.DefaultTableModel(

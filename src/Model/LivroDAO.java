@@ -172,7 +172,7 @@ public class LivroDAO {
         rs = MySQLDAO.getResultSet("SELECT * FROM LIVROS WHERE IDLIVRO = ?", id);
         try {
             if (rs.next()) {
-                result = new LivroBEAN(rs.getInt("IDLIVRO"), rs.getString("TITULO") ,rs.getString("STATUSLIVRO"), rs.getInt("idEditora"), rs.getInt("diAutor"));
+                result = new LivroBEAN(rs.getInt("IDLIVRO"), rs.getString("TITULO") ,rs.getString("STATUSLIVRO"), rs.getInt("idEditora"), rs.getInt("idAutor"));
             }
             rs.close();
         } catch (SQLException e) {
