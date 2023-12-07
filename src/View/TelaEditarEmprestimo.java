@@ -148,6 +148,7 @@ public class TelaEditarEmprestimo extends javax.swing.JFrame {
 
         jComboBoxStatus.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jComboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
+        jComboBoxStatus.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel7.setText("DESCRIÇÃO: ");
